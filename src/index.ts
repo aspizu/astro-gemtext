@@ -24,6 +24,9 @@ type SetupHookParams = HookParameters<"astro:config:setup"> & {
 }
 
 export default function gemtext(config: GemtextConfig = {}): AstroIntegration {
+    if (!config.titleFormat) {
+        config.titleFormat = "first-heading"
+    }
     return {
         name: "astro-gemtext",
         hooks: {
