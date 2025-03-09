@@ -10,7 +10,11 @@
         "@types/node": "^22.13.10",
         "astro": "^5.4.2",
         "prettier": "^3.5.3",
+        "typescript": "^5.8.2",
         "vite": "^6.2.1",
+      },
+      "peerDependencies": {
+        "astro": ">= 3.0.0",
       },
     },
   },

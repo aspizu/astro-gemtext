@@ -1,9 +1,14 @@
 {
     "name": "astro-gemtext",
-    "version": "0.1.0",
+    "homepage": "https://github.com/aspizu/astro-gemtext",
+    "version": "0.2.0",
     "type": "module",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/aspizu/astro-gemtext.git"
+    },
     "scripts": {
         "fmt": "bunx --bun prettier --write .",
         "compile": "tsc --outDir dist"
@@ -11,9 +16,19 @@
     "files": [
         "dist"
     ],
-    "author": "",
+    "keywords": [
+        "astro",
+        "renderer",
+        "astro-component",
+        "withastro"
+    ],
+    "author": {
+        "name": "Priyanshu Dangare",
+        "email": "aspizu@protonmail.com",
+        "url": "https://github.com/aspizu"
+    },
     "license": "MIT",
-    "description": "",
+    "description": "gemtext integration for Astro.",
     "dependencies": {
         "gemtext": "^0.2.2"
     },
@@ -21,6 +36,10 @@
         "@types/node": "^22.13.10",
         "astro": "^5.4.2",
         "prettier": "^3.5.3",
+        "typescript": "^5.8.2",
         "vite": "^6.2.1"
+    },
+    "peerDependencies": {
+        "astro": ">= 3.0.0"
     }
 }
