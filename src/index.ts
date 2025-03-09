@@ -15,7 +15,7 @@ type SetupHookParams = HookParameters<"astro:config:setup"> & {
     addContentEntryType: (contentEntryType: ContentEntryType) => void
 }
 
-export default function gemtext(config: GemtextConfig): AstroIntegration {
+export default function gemtext(config: GemtextConfig = {}): AstroIntegration {
     if (!config.layout) {
         config.layout = "/src/layouts/Layout.astro"
     }
