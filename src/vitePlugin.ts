@@ -14,11 +14,7 @@ import {
     unescapeHTML,
 } from "astro/runtime/server/index.js";
 import { Fragment, jsx as h } from "astro/jsx-runtime";
-let Layout = undefined;
-try {
-    Layout = import(${JSON.stringify(config.layout)});
-} catch (e) {
-}
+${config.layout ? `import Layout from ${JSON.stringify(config.layout)};` : ""}
 export const name = "TypstComponent";
 export const html = ${JSON.stringify(html)};
 export const frontmatter = undefined;
@@ -32,10 +28,8 @@ export function getHeadings() {
 }
 export async function Content() {
     const content = h(Fragment, {"set:html": html});
-    if (Layout) 
-        return h(Layout, {title: url, children: content});
-    else
-        return content;
+    ${config.layout && `return h(Layout, {title: url, children: content});`}
+    ${!config.layout && `return content;`}
 }
 export default Content;
 `

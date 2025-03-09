@@ -16,9 +16,6 @@ type SetupHookParams = HookParameters<"astro:config:setup"> & {
 }
 
 export default function gemtext(config: GemtextConfig = {}): AstroIntegration {
-    if (!config.layout) {
-        config.layout = "/src/layouts/Layout.astro"
-    }
     return {
         name: "astro-gemtext",
         hooks: {
