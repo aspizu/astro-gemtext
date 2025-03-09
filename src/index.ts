@@ -4,7 +4,10 @@ import gemtextVitePlugin from "./vitePlugin.js"
 
 export const ext = "gmi"
 
+/** Gemtext configuration options */
 export interface GemtextConfig {
+    /** Absolute import path to the layout to use for all gemtext pages.
+     * If not provided, HMR and the Astro toolbar will not work. (default: none) */
     layout?: string
 }
 
