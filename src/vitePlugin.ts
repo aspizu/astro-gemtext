@@ -1,4 +1,5 @@
 import {HTMLRenderer, parse} from "gemtext"
+import path from "path"
 import {pathToFileURL} from "url"
 import type {Plugin} from "vite"
 import {ext, type GemtextConfig} from "./index.js"
@@ -15,7 +16,7 @@ function transform(code: string, id: string, config: GemtextConfig) {
             }
         }
     } else if (config.titleFormat === "filename") {
-        title = pathToFileURL(id).pathname.split("/").pop()
+        title = path.basename(id)
     }
     const html = result.generate(HTMLRenderer)
     return `
@@ -40,8 +41,8 @@ export function getHeadings() {
 }
 export async function Content() {
     const content = h(Fragment, {"set:html": html});
-    ${config.layout && `return h(Layout, {title: ${JSON.stringify(title)}}, content);`}
-    ${!config.layout && `return content;`}
+    ${config.layout ? `return h(Layout, {title: ${JSON.stringify(title)}, children: content});` : ""}
+    ${!config.layout ? `return content;` : ""}
 }
 export default Content;
 `
