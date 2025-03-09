@@ -1,0 +1,26 @@
+{
+    "name": "astro-gemtext",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "fmt": "bunx --bun prettier --write .",
+        "compile": "tsc --outDir dist"
+    },
+    "files": [
+        "dist"
+    ],
+    "author": "",
+    "license": "MIT",
+    "description": "",
+    "dependencies": {
+        "gemtext": "^0.2.2"
+    },
+    "devDependencies": {
+        "@types/node": "^22.13.10",
+        "astro": "^5.4.2",
+        "prettier": "^3.5.3",
+        "vite": "^6.2.1"
+    }
+}
