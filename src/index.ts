@@ -9,6 +9,11 @@ export interface GemtextConfig {
     /** Absolute import path to the layout to use for all gemtext pages.
      * If not provided, HMR and the Astro toolbar will not work. (default: none) */
     layout?: string
+    /** The format to use for the page title. Can be one of:
+     * - `first-heading`: The first heading in the document will be used as the title. (default)
+     * - `filename`: The filename of the document will be used as the title.
+     */
+    titleFormat?: "first-heading" | "filename"
 }
 
 type SetupHookParams = HookParameters<"astro:config:setup"> & {

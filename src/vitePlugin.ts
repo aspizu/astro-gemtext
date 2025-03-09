@@ -5,6 +5,18 @@ import {ext, type GemtextConfig} from "./index.js"
 
 function transform(code: string, id: string, config: GemtextConfig) {
     const result = parse(code)
+    let title
+
+    if (config.titleFormat === "first-heading") {
+        for (const node of result.data) {
+            if (node._ === 4) {
+                title = node.text
+                break
+            }
+        }
+    } else if (config.titleFormat === "filename") {
+        title = pathToFileURL(id).pathname.split("/").pop()
+    }
     const html = result.generate(HTMLRenderer)
     return `
 import {
@@ -28,7 +40,7 @@ export function getHeadings() {
 }
 export async function Content() {
     const content = h(Fragment, {"set:html": html});
-    ${config.layout && `return h(Layout, {title: url, children: content});`}
+    ${config.layout && `return h(Layout, {title: ${JSON.stringify(title)}}, content);`}
     ${!config.layout && `return content;`}
 }
 export default Content;
