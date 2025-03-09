@@ -1,9 +1,9 @@
 import {HTMLRenderer, parse} from "gemtext"
 import {pathToFileURL} from "url"
 import type {Plugin} from "vite"
-import {ext} from "./index.js"
+import {ext, type GemtextConfig} from "./index.js"
 
-function transform(code: string, id: string) {
+function transform(code: string, id: string, config: GemtextConfig) {
     const result = parse(code)
     const html = result.generate(HTMLRenderer)
     return `
@@ -14,7 +14,11 @@ import {
     unescapeHTML,
 } from "astro/runtime/server/index.js";
 import { Fragment, jsx as h } from "astro/jsx-runtime";
-import Layout from "../layouts/Layout.astro";
+let Layout = undefined;
+try {
+    Layout = import(${JSON.stringify(config.layout)});
+} catch (e) {
+}
 export const name = "TypstComponent";
 export const html = ${JSON.stringify(html)};
 export const frontmatter = undefined;
@@ -28,13 +32,16 @@ export function getHeadings() {
 }
 export async function Content() {
     const content = h(Fragment, {"set:html": html});
-    return h(Layout, {title: url, children: content});
+    if (Layout) 
+        return h(Layout, {title: url, children: content});
+    else
+        return content;
 }
 export default Content;
 `
 }
 
-export default function gemtextVitePlugin(): Plugin {
+export default function gemtextVitePlugin(config: GemtextConfig): Plugin {
     // let server: ViteDevServer
     return {
         name: "astro-gemtext",
@@ -42,7 +49,7 @@ export default function gemtextVitePlugin(): Plugin {
         transform(code, id) {
             if (!id.endsWith(`.${ext}`)) return
             return {
-                code: transform(code, id),
+                code: transform(code, id, config),
                 map: null,
             }
         },

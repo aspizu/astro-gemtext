@@ -4,6 +4,10 @@ import gemtextVitePlugin from "./vitePlugin.js"
 
 export const ext = "gmi"
 
+export interface GemtextConfig {
+    layout?: string
+}
+
 type SetupHookParams = HookParameters<"astro:config:setup"> & {
     // `addPageExtension` and `contentEntryType` are not a public APIs
     // Add type defs here
@@ -11,7 +15,10 @@ type SetupHookParams = HookParameters<"astro:config:setup"> & {
     addContentEntryType: (contentEntryType: ContentEntryType) => void
 }
 
-export default function gemtext(): AstroIntegration {
+export default function gemtext(config: GemtextConfig): AstroIntegration {
+    if (!config.layout) {
+        config.layout = "/src/layouts/Layout.astro"
+    }
     return {
         name: "astro-gemtext",
         hooks: {
@@ -32,7 +39,7 @@ export default function gemtext(): AstroIntegration {
                 })
                 params.updateConfig({
                     vite: {
-                        plugins: [gemtextVitePlugin()],
+                        plugins: [gemtextVitePlugin(config)],
                     },
                 })
             },
